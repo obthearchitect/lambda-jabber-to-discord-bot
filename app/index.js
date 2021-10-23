@@ -1,7 +1,6 @@
 /** 
  * We initialize the core libraries outside of the handler 
  * to improve performance and resuse the /tmp cache
- * TODO: client.destroy method on Discord connection
  */
 
 // eslint-disable-next-line no-undef
@@ -286,7 +285,8 @@ function gsfFleetAlerts(result) {
     /**
      * TODO: client.destroy method on Discord connection!
      * ! Running into an issue where the client connection is being 
-     * ! terminated prematurely before the payload is sent. 
+     * ! terminated prematurely before the payload is sent. Probably 
+     * ! need to consider using a promise
      */
     // client.on("ready", (client) => {
     //     client.destroy(console.log("Terminated the connection"))
