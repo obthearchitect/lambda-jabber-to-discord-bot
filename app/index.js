@@ -1,6 +1,7 @@
 /** 
  * We initialize the core libraries outside of the handler 
  * to improve performance and resuse the /tmp cache
+ * ! TODO: Add a maintenance mode for the bot
  */
 
 // eslint-disable-next-line no-undef
