@@ -263,33 +263,28 @@ function gsfFleetAlerts(result) {
 
         client.on("ready", (client) => {
             // eslint-disable-next-line no-undef
-            client.channels.cache.get(process.env.BOT_CHANNEL_ID).send({
-                content: `_${random_warQuote}_`,
-                embeds: [fleetEmbed],
-                components: [fleetButton],
-            });
-
+            client.channels.cache.get(process.env.BOT_CHANNEL_ID)
+                .send({
+                    content: `_${random_warQuote}_`,
+                    embeds: [fleetEmbed],
+                    components: [fleetButton],
+                })
+                .then(setTimeout(() => client.destroy(), 200))
+                .catch(console.error)
         })
     }
     else (
         client.on("ready", (client) => {
             // eslint-disable-next-line no-undef
-            client.channels.cache.get(process.env.BOT_CHANNEL_ID).send({
-                content: `_${random_warQuote}_`,
-                embeds: [fleetEmbed]
-            });
+            client.channels.cache.get(process.env.BOT_CHANNEL_ID)
+                .send({
+                    content: `_${random_warQuote}_`,
+                    embeds: [fleetEmbed]
+                })
+                .then(setTimeout(() => client.destroy(), 200))
+                .catch(console.error)
         })
     );
     // eslint-disable-next-line no-undef
     client.login(process.env.BOT_TOKEN);
-
-    /**
-     * TODO: client.destroy method on Discord connection!
-     * ! Running into an issue where the client connection is being 
-     * ! terminated prematurely before the payload is sent. Probably 
-     * ! need to consider using a promise
-     */
-    // client.on("ready", (client) => {
-    //     client.destroy(console.log("Terminated the connection"))
-    // })
 }
