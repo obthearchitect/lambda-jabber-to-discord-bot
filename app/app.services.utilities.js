@@ -1,6 +1,16 @@
 module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 	let finalResult;
-	if (initialPayload.indexOf('Comms') > -1) {
+	const checkForKeywords = JSON.stringify(initialPayload)
+		.toUpperCase()
+		.replace(':', '');
+
+	if (
+		checkForKeywords.includes('FC NAME') == true &&
+		checkForKeywords.includes('FORMUP LOCATION') == true &&
+		checkForKeywords.includes('PAP TYPE') == true &&
+		checkForKeywords.includes('COMMS') == true &&
+		checkForKeywords.includes('DOCTRINE') == true
+	) {
 		const regexInitialPayloadFormatting =
 			/(conversation)(.*)(directorbot:\s)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(Comms:)(.*)(Doctrine:)(.*)(this was a)(.*)/gims;
 		const substInitialPayloadFormatting = `_$4_\n\n$5$6\n$7$8\n$9$10\n$13$14`;
@@ -9,10 +19,24 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 			regexInitialPayloadFormatting,
 			substInitialPayloadFormatting
 		);
-	} else {
+	} else if (
+		checkForKeywords.includes('FC NAME') == true &&
+		checkForKeywords.includes('FORMUP LOCATION') == true &&
+		checkForKeywords.includes('PAP TYPE') == true &&
+		checkForKeywords.includes('COMMS') !== true &&
+		checkForKeywords.includes('DOCTRINE') == true
+	) {
 		const regexInitialPayloadFormatting =
 			/(conversation)(.*)(directorbot:\s)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(.*)(Doctrine:)(.*)(this was a)(.*)/gim;
 		const substInitialPayloadFormatting = `_$4_\n\n$5$6\n$7$8\n$9$10\n$12$13`;
+
+		finalResult = initialPayload.replace(
+			regexInitialPayloadFormatting,
+			substInitialPayloadFormatting
+		);
+	} else {
+		const regexInitialPayloadFormatting = /(.*)(directorbot:\s)|(\\n|\r)/gim;
+		const substInitialPayloadFormatting = `\n`;
 
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormatting,
