@@ -1,5 +1,5 @@
 /**
- * Let's initialize all our required modules
+ * Let's initialize all our required modules & libraries
  * TODO: Add a maintenance mode for the bot
  */
 
@@ -12,6 +12,7 @@ const {
 	generateKillboardURL,
 } = require('./app.services.extractions');
 const { formattingTasks } = require('./app.services.utilities');
+const { Client, Intents } = require('discord.js');
 
 /**
  * This section is the handler that's responsible for processing
@@ -37,7 +38,7 @@ exports.handler = function (input, context, callback) {
 /**
  * In this section we take the payload that we recieved from Lambda
  * and perform all the required transformations, and send the final
- * product to Discord via the MessageEmbed API
+ * result to Discord via the MessageEmbed API
  */
 
 function FleetAlerts(result) {
@@ -53,10 +54,13 @@ function FleetAlerts(result) {
 	);
 	const storedWarQuotes = randomWarQuote(storedPayloadStringified);
 
+	const createDiscordClient = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
 	discordMessage(
 		storedBroadcastMessage,
 		storedFinalResult,
 		storedExtractCommsURL,
-		storedWarQuotes
+		storedWarQuotes,
+		createDiscordClient
 	);
 }

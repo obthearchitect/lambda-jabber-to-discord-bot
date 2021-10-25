@@ -1,14 +1,20 @@
-const Discord = require('discord.js');
-const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
-
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+/**
+ * Instantiates the connection to Discord, takes all the data that's
+ * been formated and send it as an embedded message
+ */
 
 module.exports.discordMessage = (
 	discordMessageBroadcastMessage,
 	discordMessageFinalResult,
 	discordMessageMumbleURL,
-	discordMessageWarQuote
+	discordMessageWarQuote,
+	discordClient
 ) => {
+	const {
+		MessageEmbed,
+		MessageActionRow,
+		MessageButton,
+	} = require('discord.js');
 	const fleetEmbed = new MessageEmbed()
 		.setColor('#00FF00')
 		.setAuthor(discordMessageBroadcastMessage)
@@ -26,7 +32,7 @@ module.exports.discordMessage = (
 				.setDisabled(false)
 		);
 
-		client.on('ready', (client) => {
+		discordClient.on('ready', (client) => {
 			client.channels.cache
 				.get(process.env.BOT_CHANNEL_ID)
 				.send({
@@ -34,20 +40,20 @@ module.exports.discordMessage = (
 					embeds: [fleetEmbed],
 					components: [fleetButton],
 				})
-				.then(setTimeout(() => client.destroy(), 200))
+				.then(() => client.destroy())
 				.catch(console.error);
 		});
 	} else {
-		client.on('ready', (client) => {
+		discordClient.on('ready', (client) => {
 			client.channels.cache
 				.get(process.env.BOT_CHANNEL_ID)
 				.send({
 					content: `_${discordMessageWarQuote}_`,
 					embeds: [fleetEmbed],
 				})
-				.then(setTimeout(() => client.destroy(), 200))
+				.then(() => client.destroy())
 				.catch(console.error);
 		});
 	}
+	discordClient.login(process.env.BOT_TOKEN);
 };
-client.login(process.env.BOT_TOKEN);

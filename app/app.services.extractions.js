@@ -58,8 +58,8 @@ module.exports.generateKillboardURL = (initialPayload) => {
 	resultFlightCommanderName = resultFlightCommanderName.split(' ');
 	resultFlightCommanderName = resultFlightCommanderName.splice(1);
 	resultFlightCommanderName = resultFlightCommanderName.join(' ');
-	const fcName = resultFlightCommanderName;
-	console.log(fcName);
+	// const fcName = resultFlightCommanderName;
+	// console.log(fcName);
 
 	const regexzKillboardURL = /\s/gim;
 	const substzKillboardURL = `%20`;
