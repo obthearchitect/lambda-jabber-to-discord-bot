@@ -44,6 +44,7 @@ exports.handler = function (input, context, callback) {
 
 function FleetAlerts(result) {
 	const storedPayloadStringified = JSON.stringify(result.logEvents[0].message);
+	console.log(`Debug statement for storedPayload: ${storedPayloadStringified}`);
 	const storedKillboardURL = generateKillboardURL(storedPayloadStringified);
 	const storedFCName = extractFCName(storedPayloadStringified);
 	const storedFinalResult = formattingTasks(
@@ -52,6 +53,7 @@ function FleetAlerts(result) {
 		storedFCName
 	);
 	const storedExtractCommsURL = extractCommsURL(storedPayloadStringified);
+
 	const storedBroadcastMessage = extractBroadcastMesssage(
 		storedPayloadStringified
 	);

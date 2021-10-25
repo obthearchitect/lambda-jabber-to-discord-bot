@@ -33,8 +33,8 @@ module.exports.extractCommsURL = (initialPayload) => {
 	);
 
 	if (resultTransformURL.indexOf('comms') > -1) {
-		const regexExtractURL = /(^.*(?<=OP\s[0-9]{1,4}\s))|(\\nDoctrine.*$)/gim;
-		const substExtractURL = ``;
+		const regexExtractURL = /(.*)(https:)(.*)(.html)(.*)/gim;
+		const substExtractURL = `$2$3$4`;
 		transformURL = transformURL.replace(regexExtractURL, substExtractURL);
 		return (transformURL = transformURL.split('"')[0].trim());
 	} else {
