@@ -1,4 +1,4 @@
-module.exports.formattingTasks = (initialPayload, zKillboardURL) => {
+module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 	// Remove incorrectly formated line breaks
 	const regexRemoveLineBreaks = /\\n|\r/gim;
 	const substRemoveLineBreaks = `\n`;
@@ -43,8 +43,8 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL) => {
 	let finalResult = resultRemoveQuotes;
 
 	// Insert Line Break for FC
-	const regexFcBreak = /(FC Name:)/gms;
-	const substFcBreak = `\n**FC Name:** [FC's Killboard](${zKillboardURL})`;
+	const regexFcBreak = /(FC Name:)(.*)/gm;
+	const substFcBreak = `\n**FC Name:** [${fcName}](${zKillboardURL})`;
 	finalResult = finalResult.replace(regexFcBreak, substFcBreak);
 
 	// Remove comms since we have a mumble button

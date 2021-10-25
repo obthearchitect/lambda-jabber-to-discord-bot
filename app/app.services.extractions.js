@@ -58,8 +58,6 @@ module.exports.generateKillboardURL = (initialPayload) => {
 	resultFlightCommanderName = resultFlightCommanderName.split(' ');
 	resultFlightCommanderName = resultFlightCommanderName.splice(1);
 	resultFlightCommanderName = resultFlightCommanderName.join(' ');
-	// const fcName = resultFlightCommanderName;
-	// console.log(fcName);
 
 	const regexzKillboardURL = /\s/gim;
 	const substzKillboardURL = `%20`;
@@ -69,4 +67,24 @@ module.exports.generateKillboardURL = (initialPayload) => {
 		regexzKillboardURL,
 		substzKillboardURL
 	));
+};
+
+/**
+ * Want to optimize this so I can keep the code DRY
+ */
+module.exports.extractFCName = (initialPayload) => {
+	const flightCommander = JSON.stringify(initialPayload);
+
+	const regexFlightCommanderName =
+		/^.*(FC Name:)(.*)(\\\\nFormup Location:).*/gis;
+	const substFlightCommanderName = `$2`;
+
+	let resultFlightCommanderName = flightCommander.replace(
+		regexFlightCommanderName,
+		substFlightCommanderName
+	);
+
+	resultFlightCommanderName = resultFlightCommanderName.split(' ');
+	resultFlightCommanderName = resultFlightCommanderName.splice(1);
+	return (resultFlightCommanderName = resultFlightCommanderName.join(' '));
 };
