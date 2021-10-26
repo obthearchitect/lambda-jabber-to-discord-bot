@@ -21,9 +21,14 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		);
 
 		console.log(`Debug the removal of comms ${finalResult}`);
-		const regexRemoveComms = /(comms:)(.*)(doctrine:)(.*)/gims;
-		const substRemoveComms = `$3$4`;
-		finalResult = finalResult.replace(regexRemoveComms, substRemoveComms);
+		const regexRemoveCommsAndBroadcast =
+			/(comms:)(.*)(doctrine:)(.*)(~~~\sThis was a)(.*)/gims;
+
+		const substRemoveCommsAndBroadcast = `$3$4`;
+		finalResult = finalResult.replace(
+			regexRemoveCommsAndBroadcast,
+			substRemoveCommsAndBroadcast
+		);
 
 		console.log(`Debug Final Result for Formatting WITH Comms: ${finalResult}`);
 	} else if (
@@ -41,14 +46,32 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 			regexInitialPayloadFormatting,
 			substInitialPayloadFormatting
 		);
+
+		console.log(
+			`Debug show me the reults for the initial formattin for no comms: \n${finalResult}`
+		);
+		const regexRemoveBroadcast = /(.*)(doctrine:)(.*)(~~~\sThis was a)(.*)/gims;
+		const substRemoveBroadcast = `$1$2$3`;
+
+		finalResult = finalResult.replace(
+			regexRemoveBroadcast,
+			substRemoveBroadcast
+		);
 	} else {
-		const regexInitialPayloadFormatting =
-			/(.*)(directorbot:\s)(.*)(~~~ This was a)(.*)/g;
+		const regexInitialPayloadFormatting = /(.*)(directorbot:\s)(.*)(")/gims;
 		const substInitialPayloadFormatting = `$3`;
 
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormatting,
 			substInitialPayloadFormatting
+		);
+
+		const regexRemoveBroadcast = /(.*)(~~~\sThis was a)(.*)/gims;
+		const substRemoveBroadcast = `$1`;
+
+		finalResult = finalResult.replace(
+			regexRemoveBroadcast,
+			substRemoveBroadcast
 		);
 	}
 
