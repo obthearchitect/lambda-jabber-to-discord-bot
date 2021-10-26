@@ -1,5 +1,5 @@
 /**
- * I'm extracting a more data from the initial payload
+ * I'm extracting more data from the initial payload
  * to be processed and appended to the final output
  * passed to Discord
  */
@@ -42,36 +42,6 @@ module.exports.extractCommsURL = (initialPayload) => {
 	}
 };
 
-module.exports.generateKillboardURL = (initialPayload) => {
-	const flightCommander = JSON.stringify(initialPayload);
-	const zKillboardURL = 'https://zkillboard.com/character/';
-
-	const regexFlightCommanderName =
-		/^.*(FC Name:)(.*)(\\\\nFormup Location:).*/gis;
-	const substFlightCommanderName = `$2`;
-
-	let resultFlightCommanderName = flightCommander.replace(
-		regexFlightCommanderName,
-		substFlightCommanderName
-	);
-
-	resultFlightCommanderName = resultFlightCommanderName.split(' ');
-	resultFlightCommanderName = resultFlightCommanderName.splice(1);
-	resultFlightCommanderName = resultFlightCommanderName.join(' ');
-
-	const regexzKillboardURL = /\s/gim;
-	const substzKillboardURL = `%20`;
-
-	let finalzKillboardURL = zKillboardURL + resultFlightCommanderName;
-	return (finalzKillboardURL = finalzKillboardURL.replace(
-		regexzKillboardURL,
-		substzKillboardURL
-	));
-};
-
-/**
- * Want to optimize this so I can keep the code DRY
- */
 module.exports.extractFCName = (initialPayload) => {
 	const flightCommander = JSON.stringify(initialPayload);
 
@@ -87,4 +57,16 @@ module.exports.extractFCName = (initialPayload) => {
 	resultFlightCommanderName = resultFlightCommanderName.split(' ');
 	resultFlightCommanderName = resultFlightCommanderName.splice(1);
 	return (resultFlightCommanderName = resultFlightCommanderName.join(' '));
+};
+
+module.exports.generateKillboardURL = (initialPayload) => {
+	const zKillboardURL = 'https://zkillboard.com/character/';
+	const regexzKillboardURL = /\s/gim;
+	const substzKillboardURL = `%20`;
+
+	let finalzKillboardURL = zKillboardURL + initialPayload;
+	return (finalzKillboardURL = finalzKillboardURL.replace(
+		regexzKillboardURL,
+		substzKillboardURL
+	));
 };

@@ -23,6 +23,9 @@ module.exports.discordMessage = (
 		.setTimestamp()
 		.setFooter('Fleet up and get those PAPs!');
 
+	/**
+	 * Let's switch this to a teneary after we fix formatting
+	 */
 	if (discordMessageMumbleURL != null) {
 		const fleetButton = new MessageActionRow().addComponents(
 			new MessageButton()

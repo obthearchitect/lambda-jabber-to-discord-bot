@@ -12,13 +12,20 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		checkForKeywords.includes('DOCTRINE') == true
 	) {
 		const regexInitialPayloadFormatting =
-			/(conversation)(.*)(directorbot:\s)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(Comms:)(.*)(Doctrine:)(.*)(this was a)(.*)/gims;
-		const substInitialPayloadFormatting = `_$4_\n\n$5$6\n$7$8\n$9$10\n$13$14`;
+			/(.*)(directorbot:)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(comms:)(.*)(Doctrine:)(.*)(")/gims;
+		const substInitialPayloadFormatting = `$3\n$4$5\n$6$7\n$8$9\n$10$11\n$12$13`;
 
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormatting,
 			substInitialPayloadFormatting
 		);
+
+		console.log(`Debug the removal of comms ${finalResult}`);
+		const regexRemoveComms = /(comms:)(.*)(doctrine:)(.*)/gims;
+		const substRemoveComms = `$3$4`;
+		finalResult = finalResult.replace(regexRemoveComms, substRemoveComms);
+
+		console.log(`Debug Final Result for Formatting WITH Comms: ${finalResult}`);
 	} else if (
 		checkForKeywords.includes('FC NAME') == true &&
 		checkForKeywords.includes('FORMUP LOCATION') == true &&
@@ -27,16 +34,17 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		checkForKeywords.includes('DOCTRINE') == true
 	) {
 		const regexInitialPayloadFormatting =
-			/(conversation)(.*)(directorbot:\s)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(.*)(Doctrine:)(.*)(this was a)(.*)/gim;
-		const substInitialPayloadFormatting = `_$4_\n\n$5$6\n$7$8\n$9$10\n$12$13`;
+			/(.*)(directorbot:)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(.*)(Doctrine:)(.*)(")/gims;
+		const substInitialPayloadFormatting = `$3\n$4$5\n$6$7\n$8$9\n$11$12`;
 
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormatting,
 			substInitialPayloadFormatting
 		);
 	} else {
-		const regexInitialPayloadFormatting = /(.*)(directorbot:\s)|(\\n|\r)/gim;
-		const substInitialPayloadFormatting = `\n`;
+		const regexInitialPayloadFormatting =
+			/(.*)(directorbot:\s)(.*)(~~~ This was a)(.*)/g;
+		const substInitialPayloadFormatting = `$3`;
 
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormatting,
@@ -44,23 +52,33 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		);
 	}
 
-	const regexRemoveLineBreaks = /(\\n|\r)|(~~~)|(")/gims;
-	const substRemoveLineBreaks = ``;
+	console.log(`Debugging before line breaks: ${finalResult}`);
 
+	const regexRemoveLineBreaks = /(\\t\\n)|(\\n)|(\\r)|(\\n\\n)/g;
+	const substRemoveLineBreaks = ` `;
 	finalResult = finalResult.replace(
 		regexRemoveLineBreaks,
 		substRemoveLineBreaks
 	);
 
+	console.log(`Debugging after line breaks: ${finalResult}`);
+
+	const regexDescriptionItalics = /^.*^(.*)$/m;
+	const substDescriptionItalics = `_$1_`;
+	finalResult = finalResult.replace(
+		regexDescriptionItalics,
+		substDescriptionItalics
+	);
+
 	const regexFcBreak = /(FC Name:)(.*)/gm;
-	const substFcBreak = `**FC Name:** [${fcName}](${zKillboardURL})`;
+	const substFcBreak = `\n**FC Name:** [${fcName}](${zKillboardURL})`;
 	finalResult = finalResult.replace(regexFcBreak, substFcBreak);
 
 	const regexFinalResultFormatting =
 		/(Formup Location:)|(Pap Type:)|(Doctrine:)/gim;
 	const substFinalresultFormatting = `**$1$2$3**`;
-	return (finalResult = finalResult.replace(
+	return finalResult.replace(
 		regexFinalResultFormatting,
 		substFinalresultFormatting
-	));
+	);
 };

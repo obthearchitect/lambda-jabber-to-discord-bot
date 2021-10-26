@@ -9,8 +9,8 @@ const { discordMessage } = require('./app.services.discord.js');
 const {
 	extractBroadcastMesssage,
 	extractCommsURL,
-	generateKillboardURL,
 	extractFCName,
+	generateKillboardURL,
 } = require('./app.services.extractions');
 const { formattingTasks } = require('./app.services.utilities');
 const { Client, Intents } = require('discord.js');
@@ -45,8 +45,8 @@ exports.handler = function (input, context, callback) {
 function FleetAlerts(result) {
 	const storedPayloadStringified = JSON.stringify(result.logEvents[0].message);
 	console.log(`Debug statement for storedPayload: ${storedPayloadStringified}`);
-	const storedKillboardURL = generateKillboardURL(storedPayloadStringified);
 	const storedFCName = extractFCName(storedPayloadStringified);
+	const storedKillboardURL = generateKillboardURL(storedFCName);
 	const storedFinalResult = formattingTasks(
 		storedPayloadStringified,
 		storedKillboardURL,

@@ -14,3 +14,7 @@ module.exports.warQuotes = [
 	'Great results, can be achieved with small forces.',
 	'Know your enemy and know yourself and you can fight a hundred battles without disaster',
 ];
+
+/**
+ * Consider adding things like the regular expressions to the constants
+ */
