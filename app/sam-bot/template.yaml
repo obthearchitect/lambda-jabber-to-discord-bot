@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  This SAM template will deploy a custom NodeJS 16 Runtime Lambda Layer which includes the Discord.js library. 
+  In addition it will deploy a Lambda Function that's configured to listen to a specfied CloudWatch logs 
+  group from which to process messages to send to Discord. 
+Parameters: 
+  botChannelID:
+    Type: String
+    Description: Which Discord Channel ID will the bot be posting to?
+    Default: YOUR-DISCORD-CHANNEL-ID
+    NoEcho: true
+  botToken:
+    Type: String
+    Description: The token ID for your Discord bot
+    Default: YOUR-DISCORD-BOT-TOKEN
+    NoEcho: true
+  discordClientID:
+    Type: String
+    Description: The client ID for your Discord bot
+    Default: YOUR-DISCORD-CLIENT-ID  
+    NoEcho: true
+  discordGuildID:
+    Type: String
+    Description: The Discord Guild ID that the bot will be posting to?
+    Default: YOUR-DISCORD-GUILD-ID 
+    NoEcho: true        
+  logGroupName:
+    Type: String
+    Description: The Cloudwatch Logs group that this function will be subscribed to
+    Default: YOUR-LOG-GROUP 
+    NoEcho: true        
+Resources:
+  nodeDiscordLambdaLayer:
+      Type: AWS::Serverless::LayerVersion
+      Properties:
+        LayerName: node16-discord-custom-runtime
+        Description: Node 16 and Discord 
+        ContentUri: ./lambda-layer-node-discord-custom/
+        CompatibleRuntimes: 
+          - provided
+        LicenseInfo: Apache-2.0
+  jabberToDiscordBot:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: index.handler
+      Runtime: provided
+      PackageType: Zip
+      CodeUri: ./lambda-function-jabber-to-discord-bot/
+      Description: ''
+      MemorySize: 128
+      Timeout: 5
+      Events:
+        checkCloudWatchLogs:
+          Type: CloudWatchLogs
+          Properties: 
+            LogGroupName: !Ref logGroupName
+            FilterPattern: " "
+      EventInvokeConfig:
+        MaximumRetryAttempts: 1
+      Environment:
+        Variables:
+          BOT_CHANNEL_ID: !Ref botChannelID
+          BOT_TOKEN: !Ref botToken
+          CLIENT_ID: !Ref discordClientID
+          GUILD_ID: !Ref discordGuildID
+      Layers:
+        - !Ref nodeDiscordLambdaLayer
+  

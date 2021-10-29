@@ -1,0 +1,16 @@
+{
+	"result": {
+		"messageType": "DATA_MESSAGE",
+		"owner": "454621882327",
+		"logGroup": "dev-director-bot-alerts",
+		"logStream": "dev-aws-xmpp-server",
+		"subscriptionFilters": ["devAlerts"],
+		"logEvents": [
+			{
+				"id": "36470755836667480938257589110501272706230923913868345344",
+				"timestamp": 1635405252694,
+				"message": "﻿(3:35:13 PM) directorbot: FIXED HAS C-O-M-Masfsaf-S - FRT to kick off :getin:‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍﻿‍‍‍‍﻿‍﻿‍‍‍‍‍‍‍‍ :pcgaming:\n\nFC Name:‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍﻿‍‍‍‍﻿‍﻿‍‍‍‍‍‍‍‍ DarkKiller DarkKiIIer\nFormup Location:‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍﻿‍‍‍‍﻿‍﻿‍‍‍‍‍‍‍‍ 1DQ1-A\nPap Type:‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍﻿‍‍‍‍﻿‍﻿‍‍‍‍‍‍‍‍ Strategic\nDoctrine:‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍‍﻿‍‍‍‍‍‍‍‍﻿‍‍‍‍﻿‍﻿‍‍‍‍‍‍‍‍ Harpy Fleet (Boosters > Scaasdfasflpel / Kirin > Burst > Harpy > Else)"
+			}
+		]
+	}
+}
