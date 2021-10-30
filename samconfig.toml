@@ -2,11 +2,12 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "jabber-to-discordBot-sam-app"
-s3_bucket = "jabber-to-discordBot-aws-sam-cli-managed-default-samclisourcebucket-86za3wraz7uj"
-s3_prefix = "jabber-to-discordBot-sam-app"
+stack_name = "dev-jabber-to-discordBot-sam-app"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-86za3wraz7uj"
+s3_prefix = "dev-jabber-to-discordBot-sam-app"
 region = "us-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 disable_rollback = true
 image_repositories = []
+parameter_overrides = "logGroupName=\"dev-director-bot-alerts\""

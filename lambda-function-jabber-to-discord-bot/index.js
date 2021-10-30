@@ -47,14 +47,15 @@ exports.handler = function (input, context, callback) {
 function FleetAlerts(result) {
 	const storedPayloadStringified = JSON.stringify(result.logEvents[0].message);
 	console.log(`Debug statement for storedPayload: ${storedPayloadStringified}`);
+	const storedExtractCommsURL = extractCommsURL(storedPayloadStringified);
 	const storedFCName = extractFCName(storedPayloadStringified);
+
 	const storedKillboardURL = generateKillboardURL(storedFCName);
 	const storedFinalResult = formattingTasks(
 		storedPayloadStringified,
 		storedKillboardURL,
 		storedFCName
 	);
-	const storedExtractCommsURL = extractCommsURL(storedPayloadStringified);
 
 	const storedBroadcastMessage = extractBroadcastMesssage(
 		storedPayloadStringified
@@ -70,4 +71,5 @@ function FleetAlerts(result) {
 		storedWarQuotes,
 		createDiscordClient
 	);
+	console.log(`Debug Killboard URL: ${storedKillboardURL}`);
 }

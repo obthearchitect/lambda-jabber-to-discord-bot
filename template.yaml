@@ -28,8 +28,7 @@ Parameters:
   logGroupName:
     Type: String
     Description: The Cloudwatch Logs group that this function will be subscribed to
-    Default: YOUR-LOG-GROUP 
-    NoEcho: true        
+    Default: YOUR-LOG-GROUP
 Resources:
   nodeDiscordLambdaLayer:
       Type: AWS::Serverless::LayerVersion
@@ -40,6 +39,12 @@ Resources:
         CompatibleRuntimes: 
           - provided
         LicenseInfo: Apache-2.0
+  jabberToDiscordLogGroup:
+    Type: AWS::Logs::LogGroup
+    DependsOn: [ jabberToDiscordBot ]
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${jabberToDiscordBot}
+      RetentionInDays: 7
   jabberToDiscordBot:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -66,4 +71,6 @@ Resources:
           GUILD_ID: !Ref discordGuildID
       Layers:
         - !Ref nodeDiscordLambdaLayer
+    Metadata:
+      BuildMethod: makefile
   
