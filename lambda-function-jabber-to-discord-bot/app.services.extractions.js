@@ -23,9 +23,9 @@ module.exports.extractBroadcastMesssage = (initialPayload) => {
 
 module.exports.extractCommsURL = (initialPayload) => {
 	let transformURL = JSON.stringify(initialPayload);
-	console.log(`Debug iniitial transform url string: ${transformURL}`);
+	transformURL = transformURL.toLowerCase();
 
-	if (transformURL.indexOf('comms') && transformURL.indexOf('http') > -1) {
+	if (transformURL.includes('comms') && transformURL.includes('http')) {
 		const regexExtractURL =
 			/(.*)(comms:)(.*)(htt[p]|[s],2:)(.*)(\\nDoctrine)(.*)/gim;
 		const substExtractURL = `$4$5`;
