@@ -70,6 +70,7 @@ Resources:
           CLIENT_ID: !Ref discordClientID
           GUILD_ID: !Ref discordGuildID
       Layers:
-        - !Ref nodeDiscordLambdaLayer
+        # - !Ref nodeDiscordLambdaLayer
+        - arn:aws:lambda:us-west-2:454621882327:layer:node16-discord-custom-runtime:20
     Metadata:
       BuildMethod: makefile
