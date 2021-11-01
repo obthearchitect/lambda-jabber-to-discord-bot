@@ -2,7 +2,7 @@
  * Let's initialize all our required modules & libraries
  * TODO: Add a maintenance mode for the bot
  */
-
+console.log('Trying to test locally!');
 const zlib = require('zlib');
 const { randomWarQuote } = require('./app.services');
 const { discordMessage } = require('./app.services.discord.js');

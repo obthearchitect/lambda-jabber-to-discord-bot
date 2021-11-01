@@ -1,6 +1,5 @@
-[
-	{
-		"timestamp": 1635669891617,
-		"message": "(2:30:00 AM) directorbot:  Space, the final frontier.\n\nThese are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.\n\nFC Name: Captain Kirk\nFormup Location: The Enterprise\nPap Type: Strategic\nDoctrine: Borg Fit\n~~~ This was a broadcast from testBot to all at 2021-10-31 01:02:03.90210 EVE ~~~"
+{
+	"awslogs": {
+		"data": "H4sIAAAAAAAAA01SXW/bMAz8K4SfNqAuLDuWHb+lrfuxtcOABNvDUgy0zThabcmQlKRZ0fz20W4L7JHH05F31EvQk3PY0uo4UFBAcLVYLX4/lMvl4qYMziAwB012bMzSmYxFnsdJnI2NzrQ31uyGsdfQPmyUpdobG1bGh9iR9e6dtvSWsP/g4cGFz/0whI7snqWZ43aVq60avDL6WnWerGP2r4nusA//YFWRXZkr5Wpjmwvj6y3VT5ed2TU/kYt707pQ3sa3ufhyn5fiLnh8G13uSftJ7CVQzbhCImeZlGk2y0We5nORpVGSznKZyUzEiYylSNL5PM0TEYvZPI64ZsdyNu7pFYflsR89C5mkUs5ZQYqMe+8xjiM+xUUSFVEEi4fP8BELp1IALAes6Qz8lmCjNHawsUZ7RfZ8rdd6tSVHgJYmwt4cWdCB2Uzl0qN1WzVAqTmgwSpH53DnHQvtKTwSWuiVcxxhAd4APQ+dYSXnLeqWQNMBDsZ2jTsb247oCczOT3inNjxWN1NRq73q1F8cj/HGrUzXdEdoDRy2xJLaQI8atugY0wQVbXjS5OD6Er5hTwVc4uBRafiq7BPDxva7Ae5NPckWwE7/87HW33GA8QcWbNOip1bVa31lam+VZvDC2BaulV/r0+nEj5WDA09HqKzBpkbnxyB78Hwe/h3j0th1gB7iKBahiMJEQCSKKC6i5HzOWATljxJYLXh9fP0HUiky9gUDAAA="
 	}
-]
+}

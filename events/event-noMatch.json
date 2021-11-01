@@ -1,6 +1,5 @@
-[
-	{
-		"timestamp": 1635669891617,
-		"message": "(2:30:00 AM) directorbot: Space, the final frontier.\n\nThese are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.\n\nMany say exploration is part of our destiny, but it’s actually our duty to future generations and their quest to ensure the survival of the human species.\n\n~~~ This was a broadcast from testBot to all at 2021-10-31 01:02:03.90210 EVE ~~~"
+{
+	"awslogs": {
+		"data": "H4sIAAAAAAAAAzWST2+bQBDFv8qIUyuZaAHzzze3oUmq5GSrPdRRtcDYbAO7dGfBoVHy2TsQ58buPP3em7e8eB0SyRPupx69DXjX2/3290Ox221vCm8FnjlrtPNgHa+TMMiyMArTedCa0401Qz/Pahz9WlmsnLF+aZwvW7SOLrKdsyi7D508k//c9b1PaEdGs4aGkiqreqeM/qZah5ZY/WuRk+z8P7Is0e7NtaLK2PqLcVWD1dPX1gz1T8mHe3MiP7kNb7Pg+31WBHfe47t1MaJ2C+zFU/UcIUrWaZLE6ToLsjjLgzQWUbzOkjTJ4zyNYpHniUjXIo0yEazTLE3zJM9DMed0istyspt3DpIoTpKcCUmQ8uxS42zxKdxEYiMEbB8+w0ct3MoGdr2scAWuQTgqLVs4WqOdQnt10Ae9b5AQpMVFMJqJeQTmuBx3TlpqVA+F5n56qwiv4M4Rg0b0J5QWOkXEDW7AGcDnvjVMImelPiFoPMPZ2Lam1TwmxCcwg1vuW3VkW10vh0qNqlX/5PwW79rStHU7wcnAuUFGagOd1NBI4juNUOKRnZYNHqSegOR0sV8goAh6ad28iBks1Fyh0tMKSrZX7jCEIsgJZOUG2bLPohncNFsfBzew4wn5H3xPtOTkPpSFvwOTll01DZfS+GNUIxd7aa0Z5qjUY6WQlohvb2+wbzjTmfNLKK2RdSUZxE/RgWMk/14zlcOAdBCKMPAD4UcBiGAjwo2IrnK+E1D8KIBp3uvj63+FvCq/RgMAAA=="
 	}
-]
+}

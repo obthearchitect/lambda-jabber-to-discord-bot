@@ -4,7 +4,7 @@ Description: >
   This SAM template will deploy a custom NodeJS 16 Runtime Lambda Layer which includes the Discord.js library. 
   In addition it will deploy a Lambda Function that's configured to listen to a specfied CloudWatch logs 
   group from which to process messages to send to Discord. 
-Parameters: 
+Parameters:
   botChannelID:
     Type: String
     Description: Which Discord Channel ID will the bot be posting to?
@@ -28,7 +28,7 @@ Parameters:
   logGroupName:
     Type: String
     Description: The Cloudwatch Logs group that this function will be subscribed to
-    Default: YOUR-LOG-GROUP
+    Default: YOUR-LOG-GROUP 
 Resources:
   nodeDiscordLambdaLayer:
       Type: AWS::Serverless::LayerVersion
@@ -73,4 +73,3 @@ Resources:
         - !Ref nodeDiscordLambdaLayer
     Metadata:
       BuildMethod: makefile
-  
