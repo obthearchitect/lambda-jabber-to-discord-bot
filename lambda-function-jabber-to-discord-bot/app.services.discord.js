@@ -10,12 +10,8 @@ module.exports.discordMessage = (
 	discordMessageWarQuote,
 	discordClient
 ) => {
-	const {
-		MessageEmbed,
-		MessageActionRow,
-		MessageButton,
-	} = require('discord.js');
-	const fleetEmbed = new MessageEmbed()
+	let { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+	let fleetEmbed = new MessageEmbed()
 		.setColor('#00FF00')
 		.setAuthor(discordMessageBroadcastMessage)
 		.setDescription(discordMessageFinalResult)
@@ -27,7 +23,7 @@ module.exports.discordMessage = (
 	 * Let's switch this to a teneary after we fix formatting
 	 */
 	if (discordMessageMumbleURL != null) {
-		const fleetButton = new MessageActionRow().addComponents(
+		let fleetButton = new MessageActionRow().addComponents(
 			new MessageButton()
 				.setURL(discordMessageMumbleURL)
 				.setLabel('Join Mumble Comms')

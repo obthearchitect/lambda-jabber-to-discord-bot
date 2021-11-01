@@ -4,10 +4,19 @@
  * passed to Discord
  */
 
-module.exports.extractBroadcastMesssage = (initialPayload) => {
-	const broadcastFrom = JSON.stringify(initialPayload);
+const {
+	zKillboardURL,
+	regexzKillboardURL,
+	substzKillboardURL,
+	regexFlightCommanderName,
+	substFlightCommanderName,
+	regexExtractURL,
+	substExtractURL,
+	regexBroadcastFrom,
+} = require('./app.constants');
 
-	const regexBroadcastFrom = /(.*)(This was a\s.*)(~~~.*)/gim;
+module.exports.extractBroadcastMesssage = (initialPayload) => {
+	let broadcastFrom = JSON.stringify(initialPayload);
 	let resultsBroadcastFrom = [];
 	resultsBroadcastFrom = broadcastFrom.match(regexBroadcastFrom);
 
@@ -26,9 +35,6 @@ module.exports.extractCommsURL = (initialPayload) => {
 	transformURL = transformURL.toLowerCase();
 
 	if (transformURL.includes('comms') && transformURL.includes('http')) {
-		const regexExtractURL =
-			/(.*)(comms:)(.*)(htt[p]|[s],2:)(.*)(\\nDoctrine)(.*)/gim;
-		const substExtractURL = `$4$5`;
 		transformURL = transformURL
 			.replace(regexExtractURL, substExtractURL)
 			.split('"')[0]
@@ -44,13 +50,7 @@ module.exports.extractCommsURL = (initialPayload) => {
 };
 
 module.exports.extractFCName = (initialPayload) => {
-	const flightCommander = JSON.stringify(initialPayload);
-	console.log(`Debug FC Name stringify: ${flightCommander}`);
-
-	const regexFlightCommanderName =
-		/(.*)(FC Name:)(.*?)(Fleet Name:|Formup Location|\\)(.*)/s;
-	const substFlightCommanderName = `$3`;
-
+	let flightCommander = JSON.stringify(initialPayload);
 	let resultFlightCommanderName = flightCommander.replace(
 		regexFlightCommanderName,
 		substFlightCommanderName
@@ -64,10 +64,6 @@ module.exports.extractFCName = (initialPayload) => {
 };
 
 module.exports.generateKillboardURL = (initialPayload) => {
-	const zKillboardURL = 'https://zkillboard.com/character/';
-	const regexzKillboardURL = /\s/gim;
-	const substzKillboardURL = `%20`;
-
 	let finalzKillboardURL = zKillboardURL + initialPayload;
 	return (finalzKillboardURL = finalzKillboardURL.replace(
 		regexzKillboardURL,

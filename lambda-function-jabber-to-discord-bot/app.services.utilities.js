@@ -1,30 +1,47 @@
+const {
+	regexFormatList,
+	substFormatList,
+	regexRemoveLineBreaks,
+	substRemoveLineBreaks,
+	regexDescriptionItalics,
+	substDescriptionItalics,
+	regexInitialPayloadFormatting,
+	substInitialPayloadFormatting,
+	regexRemoveCommsAndBroadcast,
+	substRemoveCommsAndBroadcast,
+	regexInitialPayloadFormattingElseIfOne,
+	substInitialPayloadFormattingElseIfOne,
+	regexRemoveBroadcast,
+	substRemoveBroadcast,
+	regexInitialPayloadFormattingElseIfTwo,
+	substInitialPayloadFormattingElseIfTwo,
+	regexInitialPayloadFormattingElseIfThree,
+	substInitialPayloadFormattingElseIfThree,
+	regexFinalResultFormatting,
+	substFinalresultFormatting,
+	warQuotes,
+} = require('./app.constants');
+
 module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 	let finalResult;
-	const checkForKeywords = JSON.stringify(initialPayload)
+	let checkForKeywords = JSON.stringify(initialPayload)
 		.toUpperCase()
 		.replace(':', '');
 
-	const formattingMatches = () => {
-		const regexFormatList = /(•)/gm;
-		const substFormatList = `-`;
+	let formattingMatches = () => {
 		finalResult = finalResult.replace(regexFormatList, substFormatList);
-
-		const regexRemoveLineBreaks = /(\\t\\n)|(\\n)|(\\r)|(\\n\\n)/g;
-		const substRemoveLineBreaks = `\n`;
 		finalResult = finalResult.replace(
 			regexRemoveLineBreaks,
 			substRemoveLineBreaks
 		);
 
-		const regexDescriptionItalics = /^.*^(.*)$/m;
-		const substDescriptionItalics = `_$1_`;
 		finalResult = finalResult.replace(
 			regexDescriptionItalics,
 			substDescriptionItalics
 		);
 
-		const regexFcBreak = /(FC Name:)(.*)/gm;
-		const substFcBreak = `**FC Name:** [${fcName}](${zKillboardURL})`;
+		let regexFcBreak = /(FC Name:)(.*)/gm;
+		let substFcBreak = `**FC Name:** [${fcName}](${zKillboardURL})`;
 		finalResult = finalResult.replace(regexFcBreak, substFcBreak);
 
 		let topSplit = finalResult.split('**')[0];
@@ -46,19 +63,11 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		checkForKeywords.includes('COMMS') == true &&
 		checkForKeywords.includes('DOCTRINE') == true
 	) {
-		const regexInitialPayloadFormatting =
-			/(.*)(directorbot:)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(comms:)(.*)(Doctrine:)(.*)(")/gims;
-		const substInitialPayloadFormatting = `$3\n$4$5\n$6$7\n$8$9\n$10$11\n$12$13`;
-
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormatting,
 			substInitialPayloadFormatting
 		);
 
-		const regexRemoveCommsAndBroadcast =
-			/(comms:)(.*)(doctrine:)(.*)(~~~\sThis was a)(.*)/gims;
-
-		const substRemoveCommsAndBroadcast = `$3$4`;
 		finalResult = finalResult.replace(
 			regexRemoveCommsAndBroadcast,
 			substRemoveCommsAndBroadcast
@@ -71,17 +80,10 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		checkForKeywords.includes('COMMS') !== true &&
 		checkForKeywords.includes('DOCTRINE') == true
 	) {
-		const regexInitialPayloadFormatting =
-			/(.*)(directorbot:)(.*)(FC Name:)(.*)(Formup Location:)(.*)(Pap Type:)(.*)(.*)(Doctrine:)(.*)(")/gims;
-		const substInitialPayloadFormatting = `$3\n$4$5\n$6$7\n$8$9\n$11$12`;
-
 		finalResult = initialPayload.replace(
-			regexInitialPayloadFormatting,
-			substInitialPayloadFormatting
+			regexInitialPayloadFormattingElseIfOne,
+			substInitialPayloadFormattingElseIfOne
 		);
-
-		const regexRemoveBroadcast = /(.*)(doctrine:)(.*)(~~~\sThis was a)(.*)/gims;
-		const substRemoveBroadcast = `$1$2$3`;
 
 		finalResult = finalResult.replace(
 			regexRemoveBroadcast,
@@ -96,42 +98,26 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		checkForKeywords.includes('COMMS') == true &&
 		checkForKeywords.includes('DOCTRINE') == true
 	) {
-		const regexInitialPayloadFormatting =
-			/(.*)(directorbot:)(.*)(FC Name:)(.*)(Fleet Name:)(.*)(Formup Location:)(.*)(Reimbursement:)(.*)(comms:)(.*)(Doctrine:)(.*)(")/gim;
-		const substInitialPayloadFormatting = `$3\n$4$5\n$6$7\n$8$9\n$10$11\n$12$13\n$14$15`;
-
 		finalResult = initialPayload.replace(
-			regexInitialPayloadFormatting,
-			substInitialPayloadFormatting
+			regexInitialPayloadFormattingElseIfTwo,
+			substInitialPayloadFormattingElseIfTwo
 		);
 
-		const regexRemoveCommsAndBroadcast =
-			/(.*)(comms:)(.*)(doctrine:)(.*\\n)|(~~~ This was a.*)/gims;
-
-		const substRemoveCommsAndBroadcast = `$1$4$5`;
 		finalResult = finalResult.replace(
 			regexRemoveCommsAndBroadcast,
 			substRemoveCommsAndBroadcast
 		);
 		formattingMatches();
 	} else {
-		const regexInitialPayloadFormatting = /(.*)(directorbot:\s)(.*)(")/gims;
-		const substInitialPayloadFormatting = `$3`;
-
 		finalResult = initialPayload.replace(
-			regexInitialPayloadFormatting,
-			substInitialPayloadFormatting
+			regexInitialPayloadFormattingElseIfThree,
+			substInitialPayloadFormattingElseIfThree
 		);
 
-		const regexRemoveLineBreaks = /(\\t\\n)|(\\n)|(\\r)|(\\n\\n)/g;
-		const substRemoveLineBreaks = `\n`;
 		finalResult = finalResult.replace(
 			regexRemoveLineBreaks,
 			substRemoveLineBreaks
 		);
-
-		const regexRemoveBroadcast = /(.*)(~~~\sThis was a)(.*)/gims;
-		const substRemoveBroadcast = `$1`;
 
 		finalResult = finalResult.replace(
 			regexRemoveBroadcast,
@@ -139,11 +125,10 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		);
 	}
 
-	const regexFinalResultFormatting =
-		/(Fleet Name:)|(Formup Location:)|(Reimbursement:)|(Pap Type:)|(Doctrine:)/gim;
-	const substFinalresultFormatting = `**$1$2$3$4$5**`;
 	return finalResult.replace(
 		regexFinalResultFormatting,
 		substFinalresultFormatting
 	);
 };
+module.exports.randomWarQuote = () =>
+	warQuotes[Math.floor(Math.random() * warQuotes.length)];

@@ -2,9 +2,7 @@
  * Let's initialize all our required modules & libraries
  * TODO: Add a maintenance mode for the bot
  */
-console.log('Trying to test locally!');
 const zlib = require('zlib');
-const { randomWarQuote } = require('./app.services');
 const { discordMessage } = require('./app.services.discord.js');
 const {
 	extractBroadcastMesssage,
@@ -12,7 +10,7 @@ const {
 	extractFCName,
 	generateKillboardURL,
 } = require('./app.services.extractions');
-const { formattingTasks } = require('./app.services.utilities');
+const { formattingTasks, randomWarQuote } = require('./app.services.utilities');
 const { Client, Intents } = require('discord.js');
 
 /**
@@ -47,6 +45,7 @@ exports.handler = function (input, context, callback) {
 function FleetAlerts(result) {
 	const storedPayloadStringified = JSON.stringify(result.logEvents[0].message);
 	console.log(`Debug statement for storedPayload: ${storedPayloadStringified}`);
+
 	const storedExtractCommsURL = extractCommsURL(storedPayloadStringified);
 	const storedFCName = extractFCName(storedPayloadStringified);
 
@@ -60,6 +59,7 @@ function FleetAlerts(result) {
 	const storedBroadcastMessage = extractBroadcastMesssage(
 		storedPayloadStringified
 	);
+
 	const storedWarQuotes = randomWarQuote(storedPayloadStringified);
 
 	const createDiscordClient = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -71,5 +71,6 @@ function FleetAlerts(result) {
 		storedWarQuotes,
 		createDiscordClient
 	);
+
 	console.log(`Debug Killboard URL: ${storedKillboardURL}`);
 }
