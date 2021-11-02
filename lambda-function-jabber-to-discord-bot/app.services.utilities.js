@@ -24,6 +24,8 @@ const {
 
 module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 	let finalResult;
+	const passzKillboardURL = zKillboardURL;
+	const passfcName = fcName;
 	let checkForKeywords = JSON.stringify(initialPayload)
 		.toUpperCase()
 		.replace(':', '');
@@ -94,7 +96,11 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		);
 	}
 
-	const callToFinalFormattedResult = formattingMatches(finalResult);
+	const callToFinalFormattedResult = formattingMatches(
+		finalResult,
+		passzKillboardURL,
+		passfcName
+	);
 	return callToFinalFormattedResult.replace(
 		regexFinalResultFormatting,
 		substFinalresultFormatting
