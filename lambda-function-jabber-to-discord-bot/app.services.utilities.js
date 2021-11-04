@@ -11,12 +11,16 @@ const {
 	substRemoveCommsAndBroadcast,
 	regexInitialPayloadFormattingElseIfOne,
 	substInitialPayloadFormattingElseIfOne,
-	regexRemoveBroadcast,
-	substRemoveBroadcast,
 	regexInitialPayloadFormattingElseIfTwo,
 	substInitialPayloadFormattingElseIfTwo,
 	regexInitialPayloadFormattingElseIfThree,
 	substInitialPayloadFormattingElseIfThree,
+	regexInitialPayloadFormattingElseIfFour,
+	substInitialPayloadFormattingElseIfFour,
+	regexRemoveBroadcast,
+	substRemoveBroadcast,
+	regexRemoveCommsAndBroadcastNoDoctrine,
+	substRemoveCommsAndBroadcastNoDoctrine,
 	regexFinalResultFormatting,
 	substFinalresultFormatting,
 	warQuotes,
@@ -30,6 +34,7 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		.toUpperCase()
 		.replace(':', '');
 
+	console.log(`Debug Formatting Tasks ${checkForKeywords}`);
 	if (
 		checkForKeywords.includes('FC NAME') &&
 		checkForKeywords.includes('FORMUP LOCATION') &&
@@ -37,6 +42,9 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		checkForKeywords.includes('COMMS') &&
 		checkForKeywords.includes('DOCTRINE')
 	) {
+		console.log(
+			'Debug Matched: FC NAME, FORMUP LOCATION, PAP TYPE, COMMS, DOCTRINE'
+		);
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormatting,
 			substInitialPayloadFormatting
@@ -53,6 +61,7 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		!checkForKeywords.includes('COMMS') &&
 		checkForKeywords.includes('DOCTRINE')
 	) {
+		console.log('Debug Matched: FC NAME, FORMUP LOCATION, PAP TYPE, DOCTRINE');
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormattingElseIfOne,
 			substInitialPayloadFormattingElseIfOne
@@ -70,6 +79,9 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 		checkForKeywords.includes('COMMS') &&
 		checkForKeywords.includes('DOCTRINE')
 	) {
+		console.log(
+			'Debug Matched: FC NAME, FLEET NAME, FORMUP LOCATION, REIMBURSEMENT, COMMS, DOCTRINE'
+		);
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormattingElseIfTwo,
 			substInitialPayloadFormattingElseIfTwo
@@ -79,7 +91,26 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 			regexRemoveCommsAndBroadcast,
 			substRemoveCommsAndBroadcast
 		);
+	} else if (
+		checkForKeywords.includes('FC NAME') &&
+		checkForKeywords.includes('FORMUP LOCATION') &&
+		checkForKeywords.includes('PAP TYPE') &&
+		checkForKeywords.includes('COMMS')
+	) {
+		console.log('Debug Matched: FC NAME, FORMUP LOCATION, PAP TYPE, COMMS');
+		finalResult = initialPayload.replace(
+			regexInitialPayloadFormattingElseIfFour,
+			substInitialPayloadFormattingElseIfFour
+		);
+
+		finalResult = finalResult.replace(
+			regexRemoveCommsAndBroadcastNoDoctrine,
+			substRemoveCommsAndBroadcastNoDoctrine
+		);
 	} else {
+		console.log('Debug Matched: Didnt match anything');
+		console.log('Debug No matches finalresult: ' + finalResult);
+
 		finalResult = initialPayload.replace(
 			regexInitialPayloadFormattingElseIfThree,
 			substInitialPayloadFormattingElseIfThree
@@ -108,37 +139,52 @@ module.exports.formattingTasks = (initialPayload, zKillboardURL, fcName) => {
 };
 
 function formattingMatches(finalString, zKillboardURL, fcName) {
-	let finalFormattedString = finalString.replace(
-		regexFormatList,
-		substFormatList
-	);
-	finalFormattedString = finalFormattedString.replace(
-		regexRemoveLineBreaks,
-		substRemoveLineBreaks
-	);
+	const checkForKeywords = JSON.stringify(finalString)
+		.toUpperCase()
+		.replace(':', '');
 
-	finalFormattedString = finalFormattedString.replace(
-		regexDescriptionItalics,
-		substDescriptionItalics
-	);
+	if (
+		!checkForKeywords.includes('FC NAME') &&
+		!checkForKeywords.includes('FORMUP LOCATION') &&
+		!checkForKeywords.includes('PAP TYPE') &&
+		!checkForKeywords.includes('COMMS') &&
+		!checkForKeywords.includes('DOCTRINE')
+	) {
+		console.log('Debug Matched: No matches!');
+		return finalString;
+	} else {
+		let finalFormattedString = finalString.replace(
+			regexFormatList,
+			substFormatList
+		);
+		finalFormattedString = finalFormattedString.replace(
+			regexRemoveLineBreaks,
+			substRemoveLineBreaks
+		);
 
-	let regexFcBreak = /(FC Name:)(.*)/gm;
-	let substFcBreak = `**FC Name:** [${fcName}](${zKillboardURL})`;
-	finalFormattedString = finalFormattedString.replace(
-		regexFcBreak,
-		substFcBreak
-	);
+		finalFormattedString = finalFormattedString.replace(
+			regexDescriptionItalics,
+			substDescriptionItalics
+		);
 
-	let topSplit = finalFormattedString.split('**')[0];
-	topSplit = topSplit.replace(/^\s+|\s+$/g, '');
-	let bottomSplit = finalFormattedString.substring(
-		finalFormattedString.indexOf('\n**FC Name:') + 1
-	);
-	bottomSplit = bottomSplit.replace(/(^\n)/gm, '');
-	bottomSplit = bottomSplit.replace(/(\*\*FC Name:\*\*)/gms, '\n\n$1');
-	console.log(`Debug Bottom Split for insert ${bottomSplit}`);
-	finalFormattedString = topSplit + bottomSplit;
-	return finalFormattedString;
+		let regexFcBreak = /(FC Name:)(.*)/gm;
+		let substFcBreak = `**FC Name:** [${fcName}](${zKillboardURL})`;
+		finalFormattedString = finalFormattedString.replace(
+			regexFcBreak,
+			substFcBreak
+		);
+
+		let topSplit = finalFormattedString.split('**')[0];
+		topSplit = topSplit.replace(/^\s+|\s+$/g, '');
+		let bottomSplit = finalFormattedString.substring(
+			finalFormattedString.indexOf('\n**FC Name:') + 1
+		);
+		bottomSplit = bottomSplit.replace(/(^\n)/gm, '');
+		bottomSplit = bottomSplit.replace(/(\*\*FC Name:\*\*)/gms, '\n\n$1');
+		console.log(`Debug Bottom Split for insert ${bottomSplit}`);
+		finalFormattedString = topSplit + bottomSplit;
+		return finalFormattedString;
+	}
 }
 
 module.exports.randomWarQuote = () =>

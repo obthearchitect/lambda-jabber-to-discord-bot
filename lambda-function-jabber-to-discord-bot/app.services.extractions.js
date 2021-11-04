@@ -31,21 +31,22 @@ module.exports.extractBroadcastMesssage = (initialPayload) => {
 };
 
 module.exports.extractCommsURL = (initialPayload) => {
-	let transformURL = JSON.stringify(initialPayload);
-	transformURL = transformURL.toLowerCase();
+	const transformURL = JSON.stringify(initialPayload).toLocaleLowerCase();
+	let mumbleURL = JSON.stringify(initialPayload);
 
 	if (transformURL.includes('comms') && transformURL.includes('http')) {
-		transformURL = transformURL
+		mumbleURL = mumbleURL
 			.replace(regexExtractURL, substExtractURL)
 			.split('"')[0]
 			.trim()
 			.replace('\\', '');
-		console.log(`Here's the Mumble URL: ${transformURL}`);
-		return transformURL;
+		mumbleURL = mumbleURL.replace(/(.*)(html)(.*)/, '$1$2');
+		console.log(`Here's the Mumble URL: ${mumbleURL}`);
+		return mumbleURL;
 	} else {
-		transformURL = null;
-		console.log(`There is no Mumble URL: ${transformURL}`);
-		return (transformURL = null);
+		mumbleURL = null;
+		console.log(`There is no Mumble URL: ${mumbleURL}`);
+		return (mumbleURL = null);
 	}
 };
 
